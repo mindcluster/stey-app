@@ -58,6 +58,9 @@ export default class Employee {
     proporcional_hiring_date: Date;
 
     @Column()
+    last_promotion_date: Date;
+
+    @Column()
     utilizaçao: Date;
 
     @Column()
@@ -81,20 +84,20 @@ export default class Employee {
     @Column()
     jobs_id: number;
 
-    @BeforeInsert()
-    @BeforeUpdate()
-    hashPassword() {
-        this.password = bcryptjs.hashSync(this.password ? this.password : '', 8);
-    }
-
     @OneToMany(() => Certificate, (certificate) => certificate.employee, { eager: true })
     certificates: Certificate[]
 
-    @ManyToOne(() => Smu, (smu) => smu.employees, { eager: true })
-    @JoinColumn({ name: 'SMUS_ID' })
+    @ManyToOne(() => Smu, (smu) => smu.employees, { eager: false })
+    @JoinColumn({ name: 'smus_id' })
     smus: Smu;
 
     @ManyToMany(() => Integration)
     @JoinTable()
     integrations: Integration[];
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    hashPassword() {
+        this.password = bcryptjs.hashSync(this.password ? this.password : '', 8);
+    }
 }

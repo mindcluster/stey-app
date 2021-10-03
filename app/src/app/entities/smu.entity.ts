@@ -13,6 +13,6 @@ export default class Smu {
     @Column()
     budget: number;
 
-    @OneToMany(() => Employee, (employee) => employee.smus)
-    employees: Employee[];
+     @OneToMany(() => Employee, (employee) => employee.smus)
+    employees: Employee[]; 
 }
