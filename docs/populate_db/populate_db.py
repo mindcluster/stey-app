@@ -16,6 +16,7 @@ def get_employees_from_excel():
 
 def insert_employees(mydb, df_cleaned):
     mycursor = mydb.cursor()
+    number_inserted = 0
 
     for index, row in df_cleaned.iterrows():
         EMAIL = row['GPN'] + '@ey.com.br'
@@ -50,18 +51,22 @@ def insert_employees(mydb, df_cleaned):
         SMUS_ID = get_smu(mydb, SMU_NAME)
         JOBS_ID = get_jobs(mydb, JOB_TITLE)
 
-        sql = f'''INSERT INTO EMPLOYEES(EMAIL, PASSWORD, GPN, NOME, SALARIO_BASE_FY_ATUAL, EMPLOYEE_STATUS, PAIS, GENDER, LOCATION_CITY, SERVICE_LINE, SUB_SL, RANK_ATUAL, EXP_LEV_ATUAL, JOB_TITLE, HIRING_DATE, PROPORCIONAL_HIRING_DATE, LAST_PROMOTION_DATE, UTILIZAÇAO, PROMOÇAO, LEAD_ATUAL, RANK_FUTURO, EXP_LEVEL_FUTURO, ACTUAL, SMUS_ID, JOBS_ID, LEVEL)
+        ENTRY_DATE = f"'{get_random_date()}'"
+        EXIT_DATE = get_random_date()
+        EXIT_DATE = f"'{EXIT_DATE}'" if datetime.date(
+            2021, 1, 1) <= EXIT_DATE else "NULL"
+
+        sql = f'''INSERT INTO EMPLOYEES(EMAIL, PASSWORD, GPN, NOME, SALARIO_BASE_FY_ATUAL, EMPLOYEE_STATUS, PAIS, GENDER, LOCATION_CITY, SERVICE_LINE, SUB_SL, RANK_ATUAL, EXP_LEV_ATUAL, JOB_TITLE, HIRING_DATE, PROPORCIONAL_HIRING_DATE, LAST_PROMOTION_DATE, UTILIZAÇAO, PROMOÇAO, LEAD_ATUAL, RANK_FUTURO, EXP_LEVEL_FUTURO, ACTUAL, SMUS_ID, JOBS_ID, LEVEL, ENTRY_DATE, EXIT_DATE)
         VALUES("{EMAIL}", "{PASSWORD}", "{GPN}", "{NOME}", "{SALARIO_BASE_FY_ATUAL}", "{EMPLOYEE_STATUS}",
                "{PAIS}", "{GENDER}", "{LOCATION_CITY}", "{SERVICE_LINE}", "{SUB_SL}", "{RANK_ATUAL}", {EXP_LEV_ATUAL},
                "{JOB_TITLE}", "{HIRING_DATE}", "{PROPORCIONAL_HIRING_DATE}", {LAST_PROMOTION_DATE}, "{UTILIZAÇAO}", "{PROMOÇAO}", "{LEAD_ATUAL}", 
-               "{RANK_FUTURO}", {EXP_LEVEL_FUTURO}, {ACTUAL}, {SMUS_ID}, {JOBS_ID}, {LEVEL});'''
-        print(sql)
-
+               "{RANK_FUTURO}", {EXP_LEVEL_FUTURO}, {ACTUAL}, {SMUS_ID}, {JOBS_ID}, {LEVEL}, {ENTRY_DATE}, {EXIT_DATE});'''
         mycursor.execute(sql)
+        number_inserted += 1
 
     mydb.commit()
 
-    print(mycursor.rowcount, "record inserted.")
+    print(number_inserted, "record inserted.")
     mycursor.close()
 
 
@@ -95,8 +100,7 @@ def insert_certificates(mydb):
     for i in range(1, 100):
         sql = f'''INSERT INTO CERTIFICATES(NAME, DATE, EMPLOYEES_ID)
         VALUES("Certificado {random.randint(1, 1000)}", '{get_random_date()}', {random.randint(1, 100)});'''
-        print(sql)
-
+        
         mycursor.execute(sql)
 
     mydb.commit()
