@@ -27,10 +27,10 @@ class AuthController {
             })
         }
 
-        const token = await jwt.sign({ id: employee.id, nome: employee.nome }, 'secret', { expiresIn: '100d' }) // TODO: change expiresIn to config
+        const token = await jwt.sign({ id: employee.id, nome: employee.nome, country: employee.pais }, 'secret', { expiresIn: '100d' }) // TODO: change expiresIn to config
 
         delete employee.password
-        return response.status(200).json({ 'message': 'token created', 'employee': { id: employee.id, nome: employee.nome }, 'token': token })
+        return response.status(200).json({ 'message': 'token created', 'employee': { id: employee.id, nome: employee.nome, country: employee.pais }, 'token': token })
     }
 }
 

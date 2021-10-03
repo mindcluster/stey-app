@@ -1,7 +1,7 @@
 import bcryptjs from 'bcryptjs';
 import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity('employees')
+@Entity('EMPLOYEES')
 export default class Employee {
     @PrimaryGeneratedColumn('increment')
     id: number;
