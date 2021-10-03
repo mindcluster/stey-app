@@ -17,7 +17,7 @@ def insert_employees(mydb, df_cleaned):
 
     for index, row in df_cleaned.iterrows():
         EMAIL = row['GPN'] + '@ey.com.br'
-        PASSWORD = 'teste'
+        PASSWORD = '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742'
         GPN = row['GPN']
         NOME = names.get_full_name()
         SALARIO_BASE_FY_ATUAL = row['Salario Base FY Atual']
