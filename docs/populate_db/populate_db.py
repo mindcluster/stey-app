@@ -8,7 +8,7 @@ def get_employees_from_excel():
                        engine='openpyxl', header=0)
 
     df_cleaned = pd.DataFrame(df, columns=['GPN', 'Nome', 'Salario Base FY Atual', 'Employee Status', 'Pais', 'Gender', 'Location City', 'Service Line', 'SMU Name', 'SUB SL',
-                                           'Rank Atual', 'Exp Lev Atual', 'Job Title', 'Hiring Date', 'Proporcional Hiring Date', 'Utilização', 'Promoção', 'LEAD Atual', 'Rank Futuro', 'Exp Level Futuro'])
+                                           'Rank Atual', 'Exp Lev Atual', 'Job Title', 'Hiring Date', 'Proporcional Hiring Date', 'Utilização', 'Promoção', 'LEAD Atual', 'Rank Futuro', 'Exp Level Futuro', 'Level'])
     return df_cleaned
 
 
@@ -39,16 +39,19 @@ def insert_employees(mydb, df_cleaned):
         RANK_FUTURO = row['Rank Futuro']
         EXP_LEVEL_FUTURO = row['Exp Level Futuro']
         ACTUAL = 0.13123
+        LEVEL = row['Level']
 
         SMU_NAME = row['SMU Name']
         SMUS_ID = get_smu(mydb, SMU_NAME)
         JOBS_ID = get_jobs(mydb, JOB_TITLE)
 
-        sql = f'''INSERT INTO EMPLOYEES(EMAIL, PASSWORD, GPN, NOME, SALARIO_BASE_FY_ATUAL, EMPLOYEE_STATUS, PAIS, GENDER, LOCATION_CITY, SERVICE_LINE, SUB_SL, RANK_ATUAL, EXP_LEV_ATUAL, JOB_TITLE, HIRING_DATE, PROPORCIONAL_HIRING_DATE, UTILIZAÇAO, PROMOÇAO, LEAD_ATUAL, RANK_FUTURO, EXP_LEVEL_FUTURO, ACTUAL, SMUS_ID, JOBS_ID)
+        sql = f'''INSERT INTO EMPLOYEES(EMAIL, PASSWORD, GPN, NOME, SALARIO_BASE_FY_ATUAL, EMPLOYEE_STATUS, PAIS, GENDER, LOCATION_CITY, SERVICE_LINE, SUB_SL, RANK_ATUAL, EXP_LEV_ATUAL, JOB_TITLE, HIRING_DATE, PROPORCIONAL_HIRING_DATE, UTILIZAÇAO, PROMOÇAO, LEAD_ATUAL, RANK_FUTURO, EXP_LEVEL_FUTURO, ACTUAL, SMUS_ID, JOBS_ID, LEVEL)
         VALUES("{EMAIL}", "{PASSWORD}", "{GPN}", "{NOME}", "{SALARIO_BASE_FY_ATUAL}", "{EMPLOYEE_STATUS}",
                "{PAIS}", "{GENDER}", "{LOCATION_CITY}", "{SERVICE_LINE}", "{SUB_SL}", "{RANK_ATUAL}", {EXP_LEV_ATUAL},
                "{JOB_TITLE}", "{HIRING_DATE}", "{PROPORCIONAL_HIRING_DATE}", "{UTILIZAÇAO}", "{PROMOÇAO}", "{LEAD_ATUAL}", 
-               "{RANK_FUTURO}", {EXP_LEVEL_FUTURO}, {ACTUAL}, {SMUS_ID}, {JOBS_ID});'''
+               "{RANK_FUTURO}", {EXP_LEVEL_FUTURO}, {ACTUAL}, {SMUS_ID}, {JOBS_ID}, {LEVEL});'''
+        print(sql)
+
         mycursor.execute(sql)
 
         mydb.commit()

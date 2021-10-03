@@ -1,5 +1,6 @@
 import bcryptjs from 'bcryptjs';
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import Integration from './integration.entity';
 
 @Entity('EMPLOYEES')
 export default class Employee {
@@ -83,4 +84,8 @@ export default class Employee {
     hashPassword() {
         this.password = bcryptjs.hashSync(this.password ? this.password : '', 8);
     }
+
+    @ManyToMany(() => Integration)
+    @JoinTable()
+    integrations: Integration[];
 }
