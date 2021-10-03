@@ -17,3 +17,7 @@ export interface IEntryExitResponse {
     entry: number;
     exit: number;
 }
+
+export interface IBudgetResponse {
+    budget: number;
+}

@@ -4,6 +4,12 @@ import { IEntryExitResponse } from '../../app/shared/interfaces/overview.interfa
 
 class OverviewController {
 
+    async getOverview(_: Request, res: Response) {
+        const response = await overviewService.getOverview()
+
+        res.status(200).json(response)
+    }
+
     async getPromotion(_: Request, res: Response) {
         const response = await overviewService.getPromotion()
 
