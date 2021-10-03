@@ -3,15 +3,14 @@ import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import { getRepository } from 'typeorm'
 import Employee from '../../app/entities/employee.entity'
+import employeeService from '../../app/services/employee.service'
 
 class AuthController {
     async authenticate(request: Request, response: Response) {
-        const repository = await getRepository(Employee)
+
         const { email, password } = request.body
 
-        const employee = await repository.findOne({
-            email: email
-        })
+        const employee = await employeeService.getByEmail(email)
 
         if (!employee) {
             return response.status(401).json({

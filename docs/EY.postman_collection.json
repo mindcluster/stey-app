@@ -150,12 +150,57 @@
 							}
 						},
 						"url": {
-							"raw": "{{url_base}}/employees",
+							"raw": "{{url_base}}/employee",
 							"host": [
 								"{{url_base}}"
 							],
 							"path": [
-								"employees"
+								"employee"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Overview",
+			"item": [
+				{
+					"name": "GET Promotions",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@ey.com.br\",\r\n    \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_base}}/overview/promotion",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"overview",
+								"promotion"
 							]
 						}
 					},

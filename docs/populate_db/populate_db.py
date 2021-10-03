@@ -1,6 +1,8 @@
 import pandas as pd
 import mysql.connector
 import names
+import datetime
+import random
 
 
 def get_employees_from_excel():
@@ -40,21 +42,24 @@ def insert_employees(mydb, df_cleaned):
         EXP_LEVEL_FUTURO = row['Exp Level Futuro']
         ACTUAL = 0.13123
         LEVEL = row['Level']
+        LAST_PROMOTION_DATE = get_random_date()
+        LAST_PROMOTION_DATE = f"'{LAST_PROMOTION_DATE}'" if datetime.date(
+            2021, 2, 1) <= LAST_PROMOTION_DATE else "NULL"
 
         SMU_NAME = row['SMU Name']
         SMUS_ID = get_smu(mydb, SMU_NAME)
         JOBS_ID = get_jobs(mydb, JOB_TITLE)
 
-        sql = f'''INSERT INTO EMPLOYEES(EMAIL, PASSWORD, GPN, NOME, SALARIO_BASE_FY_ATUAL, EMPLOYEE_STATUS, PAIS, GENDER, LOCATION_CITY, SERVICE_LINE, SUB_SL, RANK_ATUAL, EXP_LEV_ATUAL, JOB_TITLE, HIRING_DATE, PROPORCIONAL_HIRING_DATE, UTILIZAÇAO, PROMOÇAO, LEAD_ATUAL, RANK_FUTURO, EXP_LEVEL_FUTURO, ACTUAL, SMUS_ID, JOBS_ID, LEVEL)
+        sql = f'''INSERT INTO EMPLOYEES(EMAIL, PASSWORD, GPN, NOME, SALARIO_BASE_FY_ATUAL, EMPLOYEE_STATUS, PAIS, GENDER, LOCATION_CITY, SERVICE_LINE, SUB_SL, RANK_ATUAL, EXP_LEV_ATUAL, JOB_TITLE, HIRING_DATE, PROPORCIONAL_HIRING_DATE, LAST_PROMOTION_DATE, UTILIZAÇAO, PROMOÇAO, LEAD_ATUAL, RANK_FUTURO, EXP_LEVEL_FUTURO, ACTUAL, SMUS_ID, JOBS_ID, LEVEL)
         VALUES("{EMAIL}", "{PASSWORD}", "{GPN}", "{NOME}", "{SALARIO_BASE_FY_ATUAL}", "{EMPLOYEE_STATUS}",
                "{PAIS}", "{GENDER}", "{LOCATION_CITY}", "{SERVICE_LINE}", "{SUB_SL}", "{RANK_ATUAL}", {EXP_LEV_ATUAL},
-               "{JOB_TITLE}", "{HIRING_DATE}", "{PROPORCIONAL_HIRING_DATE}", "{UTILIZAÇAO}", "{PROMOÇAO}", "{LEAD_ATUAL}", 
+               "{JOB_TITLE}", "{HIRING_DATE}", "{PROPORCIONAL_HIRING_DATE}", {LAST_PROMOTION_DATE}, "{UTILIZAÇAO}", "{PROMOÇAO}", "{LEAD_ATUAL}", 
                "{RANK_FUTURO}", {EXP_LEVEL_FUTURO}, {ACTUAL}, {SMUS_ID}, {JOBS_ID}, {LEVEL});'''
         print(sql)
 
         mycursor.execute(sql)
 
-        mydb.commit()
+    mydb.commit()
 
     print(mycursor.rowcount, "record inserted.")
     mycursor.close()
@@ -84,6 +89,31 @@ def get_jobs(mydb, job_name):
     return 1
 
 
+def insert_certificates(mydb):
+    mycursor = mydb.cursor()
+
+    for i in range(1, 100):
+        sql = f'''INSERT INTO CERTIFICATES(NAME, DATE, EMPLOYEES_ID)
+        VALUES("Certificado {random.randint(1, 1000)}", '{get_random_date()}', {random.randint(1, 100)});'''
+        print(sql)
+
+        mycursor.execute(sql)
+
+    mydb.commit()
+    mycursor.close()
+
+
+def get_random_date():
+    start_date = datetime.date(2020, 1, 1)
+    end_date = datetime.date(2021, 5, 1)
+
+    time_between_dates = end_date - start_date
+    days_between_dates = time_between_dates.days
+    random_number_of_days = random.randrange(days_between_dates)
+    random_date = start_date + datetime.timedelta(days=random_number_of_days)
+    return random_date
+
+
 def main():
     try:
         mydb = mysql.connector.connect(
@@ -95,6 +125,7 @@ def main():
 
         df_cleaned = get_employees_from_excel()
         insert_employees(mydb, df_cleaned)
+        insert_certificates(mydb)
     except mysql.connector.Error as err:
         print(err)
 
