@@ -18,6 +18,17 @@ class EmployeeController {
 
     }
 
+    async getAll(_: Request, response: Response) {
+        try {
+            const data = await employeeService.getAll()
+            return response.status(200).json({ 'message': 'employee list', 'data': data })
+        } catch (error) {
+            return response.status(500).json({
+                message: error.message
+            })
+        }
+    }
+
 }
 
 export default new EmployeeController()

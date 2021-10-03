@@ -1,6 +1,7 @@
 import { Router } from "express"
 import authMiddleware from "../../infrastructure/middleware/auth.middleware"
 import authRouter from "./auth.routes";
+import employeeRouter from "./employee.routes";
 import integrationRouter from "./integrations.routes";
 
 
@@ -11,5 +12,6 @@ router.use("/", authRouter)
 router.use(authMiddleware);
 
 router.use("/integration", integrationRouter);
+router.use("/employee", employeeRouter)
 
 export default router

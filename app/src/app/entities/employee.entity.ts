@@ -1,6 +1,8 @@
 import bcryptjs from 'bcryptjs';
-import { BeforeInsert, BeforeUpdate, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import Certificate from './certificate.entity';
 import Integration from './integration.entity';
+import Smu from './smu.entity';
 
 @Entity('EMPLOYEES')
 export default class Employee {
@@ -84,6 +86,13 @@ export default class Employee {
     hashPassword() {
         this.password = bcryptjs.hashSync(this.password ? this.password : '', 8);
     }
+
+    @OneToMany(() => Certificate, (certificate) => certificate.employee, { eager: true })
+    certificates: Certificate[]
+
+    @ManyToOne(() => Smu, (smu) => smu.employees, { eager: true })
+    @JoinColumn({ name: 'SMUS_ID' })
+    smus: Smu;
 
     @ManyToMany(() => Integration)
     @JoinTable()
