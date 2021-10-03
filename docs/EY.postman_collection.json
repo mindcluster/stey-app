@@ -1,0 +1,167 @@
+{
+	"info": {
+		"_postman_id": "b5e21647-afee-497b-9113-f9a39bb3ae72",
+		"name": "EY",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@ey.com.br\",\r\n    \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_base}}/auth",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"\",\r\n    \"password\": \"\",\r\n    \"gpn\": \"\",\r\n    \"nome\": \"\",\r\n    \"salario_base_fy_atual\": \"\",\r\n    \"employee_status\": \"\",\r\n    \"pais\": \"\",\r\n    \"gender\": \"\",\r\n    \"location_city\": \"\",\r\n    \"service_line\": \"\",\r\n    \"sub_sl\": \"\",\r\n    \"rank_atual\": \"\",\r\n    \"exp_lev_atual\": \"\",\r\n    \"job_title\": \"\",\r\n    \"hiring_date\": \"\",\r\n    \"proporcional_hiring_date\": \"\",\r\n    \"utilizaçao\": \"\",\r\n    \"promoçao\": \"\",\r\n    \"lead_atual\": \"\",\r\n    \"rank_futuro\": \"\",\r\n    \"exp_level_futuro\": \"\",\r\n    \"actual\": \"\",\r\n    \"smus_id\": \"\",\r\n    \"jobs_id\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_base}}",
+							"host": [
+								"{{url_base}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Integration",
+			"item": [
+				{
+					"name": "GET All Integrations",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/integration",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"integration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET My Integrations",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/integration/me",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"integration",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Employees",
+			"item": [
+				{
+					"name": "GET Employees",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@ey.com.br\",\r\n    \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_base}}/employees",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"employees"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
