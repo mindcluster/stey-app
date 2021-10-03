@@ -13,7 +13,7 @@ class EmployeeService {
         const employeesResponse: IEmployeeResponse[] = []
         this.repository = connection.getRepository(Employee)
 
-        const employees: Employee[] = await this.repository.find({relations: ["smus"]})
+        const employees: Employee[] = await this.repository.find({ relations: ["smus"], cache: 100000 })
 
         for (let index = 0; index < employees.length; index++) {
             const employee = employees[index];

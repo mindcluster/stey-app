@@ -1,4 +1,4 @@
-import { getConnection, Not, Repository } from "typeorm";
+import { getConnection, Repository } from "typeorm";
 import Employee from "../entities/employee.entity";
 import { IEntryExitResponse, IOverviewResponse, IPromotionsResponse } from "../shared/interfaces/overview.interface";
 import getMonthName from "../shared/utils/getMonthName";
@@ -16,8 +16,10 @@ class OverviewService {
 
         const overview: IOverviewResponse = {
             employees: employees.length,
-            //departments: employees.map(employee => employee.department).filter((value, index, self) => self.indexOf(value) === index).length,
-            //positions: employees.map(employee => employee.position).filter((value, index, self) => self.indexOf(value) === index).length
+            entry: employees.filter(employee => employee.entry_date !== null).length,
+            exit: employees.filter(employee => employee.exit_date !== null).length,
+            promotion: employees.filter(employee => employee.last_promotion_date !== null).length / employees.length * 100,
+            turnover: employees.filter(employee => employee.exit_date !== null).length / employees.length * 100
         }
 
         return overview;
