@@ -61,6 +61,12 @@ export default class Employee {
     last_promotion_date: Date;
 
     @Column()
+    entry_date: Date;
+
+    @Column()
+    exit_date: Date;
+
+    @Column()
     utilizaçao: Date;
 
     @Column()
