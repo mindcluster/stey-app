@@ -1,5 +1,6 @@
 import { getConnection, Repository } from "typeorm";
 import Employee from "../entities/employee.entity";
+import { ISalary } from "../shared/interfaces/action.interface";
 import { IEmployeeResponse } from "../shared/interfaces/employee.interface";
 import smuService from "./smu.service";
 
@@ -68,8 +69,34 @@ class EmployeeService {
         return { employee: employeeCreated }
     }
 
-    async getPromotionScore(employeeId) { // TODO: implementar
-        return 99;
+    async getPromotionScore(employeeId) {
+        return 99; // TODO: implementar
+    }
+
+    async infoSalary(employeeId): Promise<ISalary> {
+        this.repository = connection.getRepository(Employee)
+
+        const employee: Employee = await this.repository.findOne(employeeId, { relations: ["smus"] })
+
+        return {
+            gpn: employee.gpn,
+            name: employee.nome,
+            smu: employee.smus.smu_name,
+            rank: employee.rank_atual,
+            current: employee.salario_base_fy_atual, // TODO: Implement current salary
+            market: 0,// TODO: Implement Market method from Glassdoor
+            budget_smu: employee.smus.budget
+        }
+    }
+
+    async increaseSalary(employeeId, salary) {
+        this.repository = connection.getRepository(Employee)
+
+        const employee: Employee = await this.repository.findOne(employeeId)
+        employee.salario_base_fy_atual = salary
+        const employeeUpdated = await this.repository.save(employee)
+
+        return employeeUpdated
     }
 
 }
