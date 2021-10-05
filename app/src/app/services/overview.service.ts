@@ -64,13 +64,13 @@ class OverviewService {
 
         for (const employee of employees) {
             if (employee.entry_date !== null) {
-                const date = employee.entry_date.toString()
+                const date = toJSONLocal(employee.entry_date)
 
                 if (items[date]) {
                     items[date].entry += 1;
                 } else {
                     items[date] = {
-                        date: toJSONLocal(employee.entry_date),
+                        date: date,
                         entry: 1,
                         exit: 0
                     };
@@ -78,13 +78,13 @@ class OverviewService {
             }
 
             if (employee.exit_date !== null) {
-                const date = employee.exit_date.toString()
+                const date = toJSONLocal(employee.entry_date)
 
                 if (items[date]) {
                     items[date].exit += 1;
                 } else {
                     items[date] = {
-                        date: toJSONLocal(employee.exit_date),
+                        date: date,
                         entry: 0,
                         exit: 1
                     };
