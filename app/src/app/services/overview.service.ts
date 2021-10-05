@@ -1,6 +1,7 @@
 import { getConnection, Repository } from "typeorm";
 import Employee from "../entities/employee.entity";
 import { IEntryExitResponse, IOverviewResponse, IPromotionsResponse } from "../shared/interfaces/overview.interface";
+import { toJSONLocal } from "../shared/utils/cleanData";
 import getMonthName from "../shared/utils/getMonthName";
 
 
@@ -69,7 +70,7 @@ class OverviewService {
                     items[date].entry += 1;
                 } else {
                     items[date] = {
-                        date: employee.entry_date,
+                        date: toJSONLocal(employee.entry_date),
                         entry: 1,
                         exit: 0
                     };
@@ -83,7 +84,7 @@ class OverviewService {
                     items[date].exit += 1;
                 } else {
                     items[date] = {
-                        date: employee.exit_date,
+                        date: toJSONLocal(employee.exit_date),
                         entry: 0,
                         exit: 1
                     };
