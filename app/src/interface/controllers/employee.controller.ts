@@ -56,6 +56,19 @@ class EmployeeController {
         }
     }
 
+    async getById(request: Request, response: Response) {
+        let id = request.params.id
+
+        try {
+            const data = await employeeService.getById(parseInt(id))
+            return response.status(200).json(data)
+        } catch (error) {
+            return response.status(500).json({
+                message: error.message
+            })
+        }
+    }
+
 }
 
 export default new EmployeeController()

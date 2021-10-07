@@ -15,5 +15,9 @@ export interface IEmployeeResponse {
     salary?: number;
     dependents?: number;
     promotion_score?: number;
+    last_promotion?: Date;
+    last_vacation?: Date;
+    company_time?: Date;
+    role_satisfaction?: number;
     certificates?: Certificate[]
 }
