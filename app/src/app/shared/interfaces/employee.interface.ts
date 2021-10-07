@@ -19,5 +19,7 @@ export interface IEmployeeResponse {
     last_vacation?: Date;
     company_time?: Date;
     role_satisfaction?: number;
+    sl?: string;
+    sub_sl?: string;
     certificates?: Certificate[]
 }

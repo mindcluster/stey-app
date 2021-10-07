@@ -111,6 +111,8 @@ class EmployeeService {
                 gênero: employee.gender,
                 rank: employee.rank_atual,
                 salary: employee.salario_base_fy_atual,
+                sl: employee.service_line,
+                sub_sl: employee.sub_sl,
                 dependents: 1,
                 certificates: employee.certificates,
                 promotion_score: await this.getPromotionScore(employee.id),
