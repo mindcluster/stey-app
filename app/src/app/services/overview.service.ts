@@ -132,7 +132,7 @@ class OverviewService {
         let items = {};
 
         this.repositoryEmployee = connection.getRepository(Employee);
-        const employees = await this.repositoryEmployee.find({ relations: ["smus"] });
+        const employees = await this.repositoryEmployee.find({ cache: 1000000 });
         let useEmployee: IUseEmployeeResponse = {
             employee_use: null,
             data: []
@@ -171,7 +171,7 @@ class OverviewService {
         let items = {};
 
         this.repositoryEmployee = connection.getRepository(Employee);
-        const employees = await this.repositoryEmployee.find({ relations: ["smus"] });
+        const employees = await this.repositoryEmployee.find({ cache: 1000000 });
 
         for (const employee of employees) {
             const value = Math.round(employee.exp_level_futuro * 10) / 10;
