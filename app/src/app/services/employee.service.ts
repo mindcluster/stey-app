@@ -72,7 +72,7 @@ class EmployeeService {
             smu: employee.smus.smu_name,
             rank: employee.rank_atual,
             current: employee.salario_base_fy_atual, // TODO: Implement current salary
-            market: 0,// TODO: Implement Market method from Glassdoor
+            market: await this.getMarketData(),// TODO: Implement Market method from Glassdoor
             budget_smu: employee.smus.budget
         }
     }
@@ -92,9 +92,12 @@ class EmployeeService {
     }
 
     async getRoleSatisfaction(id: number) {
-        return 20; // TODO: implementar
+        return 42; // TODO: implementar
     }
 
+    async getMarketData() {
+        return 1400;
+    }
 
     async buildEmployeeResponse(employees: Employee[]): Promise<IEmployeeResponse[]> {
         const employeesResponse: IEmployeeResponse[] = []

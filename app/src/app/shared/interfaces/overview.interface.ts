@@ -21,3 +21,8 @@ export interface IEntryExitResponse {
 export interface IBudgetResponse {
     budget: number;
 }
+
+export interface ITurnOverResponse {
+    month: string;
+    turnover: number;
+}

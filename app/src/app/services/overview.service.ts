@@ -98,6 +98,35 @@ class OverviewService {
 
         return entryExit;
     }
+
+    async getTurnover(): Promise<IEntryExitResponse[]> {
+        const turnover: IEntryExitResponse[] = []
+        let items = {};
+
+        this.repositoryEmployee = connection.getRepository(Employee);
+        const employees = await this.repositoryEmployee.find();
+
+        for (const employee of employees) {
+            if (employee.exit_date !== null) {
+                const month = new Date(employee.exit_date).getMonth();
+
+                if (items[month]) {
+                    items[month].turnover += 1;
+                } else {
+                    items[month] = {
+                        date: getMonthName(month),
+                        turnover: 1
+                    };
+                }
+            }
+        }
+
+        for (const key in items) {
+            turnover.push(items[key]);
+        }
+
+        return turnover;
+    }
 }
 
 export default new OverviewService()

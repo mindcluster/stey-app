@@ -21,6 +21,12 @@ class OverviewController {
 
         res.status(200).json(response)
     }
+
+    async getTurnover(_: Request, res: Response) {
+        const response = await overviewService.getTurnover()
+
+        res.status(200).json(response)
+    }
 }
 
 export default new OverviewController()
