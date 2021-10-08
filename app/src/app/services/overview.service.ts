@@ -152,7 +152,7 @@ class OverviewService {
                     };
                 }
             } else {
-                useEmployee.employee_use = employee.utilizaçao;
+                useEmployee.employee_use = value
             }
         }
         for (const key in items) {
