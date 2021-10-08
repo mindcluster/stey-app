@@ -1,6 +1,6 @@
 import { getConnection, Repository } from "typeorm";
 import Employee from "../entities/employee.entity";
-import { IEntryExitResponse, IOverviewResponse, IPromotionsResponse, IUseEmployeeData, IUseEmployeeResponse } from "../shared/interfaces/overview.interface";
+import { IEntryExitResponse, IFutureExpLevelEmployeeResponse, IOverviewResponse, IPromotionsResponse, IUseEmployeeData, IUseEmployeeResponse } from "../shared/interfaces/overview.interface";
 import { toJSONLocal } from "../shared/utils/cleanData";
 import getMonthName from "../shared/utils/getMonthName";
 
@@ -162,6 +162,41 @@ class OverviewService {
         useEmployee.data = useData;
         return useEmployee;
     }
+
+    async getFutureLevelExperience(id: number): Promise<IFutureExpLevelEmployeeResponse> {
+        const futureExpLevel: IFutureExpLevelEmployeeResponse = {
+            future_exp_level: null,
+            data: []
+        }
+        let items = {};
+
+        this.repositoryEmployee = connection.getRepository(Employee);
+        const employees = await this.repositoryEmployee.find({ relations: ["smus"] });
+
+        for (const employee of employees) {
+            const value = Math.round(employee.exp_level_futuro * 10) / 10;
+
+            if (employee.id !== id) {
+                if (items[value]) {
+                    items[value].value += 1;
+                } else {
+                    items[value] = {
+                        key: value,
+                        value: 1
+                    };
+                }
+            } else {
+                futureExpLevel.future_exp_level = employee.exp_level_futuro;
+            }
+        }
+
+        for (const key in items) {
+            futureExpLevel.data.push(items[key]);
+        }
+
+        return futureExpLevel;
+    }
+
 }
 
 

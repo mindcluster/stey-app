@@ -36,3 +36,13 @@ export interface IUseEmployeeResponse {
     employee_use: number,
     data: IUseEmployeeData[]
 }
+
+export interface IFutureExpLevelEmployeeData {
+    key: number
+    value: number
+}
+
+export interface IFutureExpLevelEmployeeResponse {
+    future_exp_level: number,
+    data: IFutureExpLevelEmployeeData[]
+}

@@ -34,6 +34,15 @@ class OverviewController {
 
         response.status(200).json(result)
     }
+
+
+    async getFutureLevelExperience(request: Request, response: Response) {
+        const id = request.params.id
+        const result = await overviewService.getFutureLevelExperience(parseInt(id))
+
+        response.status(200).json(result)
+
+    }
 }
 
 export default new OverviewController()
