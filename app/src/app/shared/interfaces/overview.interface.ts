@@ -26,3 +26,13 @@ export interface ITurnOverResponse {
     month: string;
     turnover: number;
 }
+
+export interface IUseEmployeeData {
+    key: number
+    value: number
+}
+
+export interface IUseEmployeeResponse {
+    employee_use: number,
+    data: IUseEmployeeData[]
+}

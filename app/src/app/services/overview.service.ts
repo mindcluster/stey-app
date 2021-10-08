@@ -1,6 +1,6 @@
 import { getConnection, Repository } from "typeorm";
 import Employee from "../entities/employee.entity";
-import { IEntryExitResponse, IOverviewResponse, IPromotionsResponse } from "../shared/interfaces/overview.interface";
+import { IEntryExitResponse, IOverviewResponse, IPromotionsResponse, IUseEmployeeData, IUseEmployeeResponse } from "../shared/interfaces/overview.interface";
 import { toJSONLocal } from "../shared/utils/cleanData";
 import getMonthName from "../shared/utils/getMonthName";
 
@@ -127,6 +127,43 @@ class OverviewService {
 
         return turnover;
     }
+
+    async getUseEmployee(id: number): Promise<IUseEmployeeResponse> {
+        let items = {};
+
+        this.repositoryEmployee = connection.getRepository(Employee);
+        const employees = await this.repositoryEmployee.find({ relations: ["smus"] });
+        let useEmployee: IUseEmployeeResponse = {
+            employee_use: null,
+            data: []
+        };
+        const useData: IUseEmployeeData[] = []
+
+        for (const employee of employees) {
+            const value = Math.round(employee.utilizaçao * 10) / 10;
+
+            if (employee.id !== id) {
+                if (items[value]) {
+                    items[value].value += 1;
+                } else {
+                    items[value] = {
+                        key: value,
+                        value: 1
+                    };
+                }
+            } else {
+                useEmployee.employee_use = employee.utilizaçao;
+            }
+        }
+        for (const key in items) {
+            useData.push(items[key]);
+        }
+
+        useEmployee.data = useData;
+        return useEmployee;
+    }
 }
+
+
 
 export default new OverviewService()

@@ -1,31 +1,38 @@
 import { Request, Response } from 'express'
 import overviewService from '../../app/services/overview.service'
-import { IEntryExitResponse } from '../../app/shared/interfaces/overview.interface'
+import { IUseEmployeeResponse } from '../../app/shared/interfaces/overview.interface'
 
 class OverviewController {
 
-    async getOverview(_: Request, res: Response) {
-        const response = await overviewService.getOverview()
+    async getOverview(_: Request, response: Response) {
+        const result = await overviewService.getOverview()
 
-        res.status(200).json(response)
+        response.status(200).json(result)
     }
 
-    async getPromotion(_: Request, res: Response) {
-        const response = await overviewService.getPromotion()
+    async getPromotion(_: Request, response: Response) {
+        const result = await overviewService.getPromotion()
 
-        res.status(200).json(response)
+        response.status(200).json(result)
     }
 
-    async getEntryExit(_: Request, res: Response) {
-        const response = await overviewService.getEntryExit()
+    async getEntryExit(_: Request, response: Response) {
+        const result = await overviewService.getEntryExit()
 
-        res.status(200).json(response)
+        response.status(200).json(result)
     }
 
-    async getTurnover(_: Request, res: Response) {
-        const response = await overviewService.getTurnover()
+    async getTurnover(_: Request, response: Response) {
+        const result = await overviewService.getTurnover()
 
-        res.status(200).json(response)
+        response.status(200).json(result)
+    }
+
+    async getUseEmployee(request: Request, response: Response) {
+        const id = request.params.id
+        const result: IUseEmployeeResponse = await overviewService.getUseEmployee(parseInt(id))
+
+        response.status(200).json(result)
     }
 }
 

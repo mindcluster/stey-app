@@ -67,7 +67,7 @@ export default class Employee {
     exit_date: Date;
 
     @Column()
-    utilizaçao: Date;
+    utilizaçao: number;
 
     @Column()
     promoçao: string;
