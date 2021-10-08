@@ -199,7 +199,7 @@ INSERT INTO INTEGRATIONS ( ID, NAME) VALUES (3, 'Hubspot');
 INSERT INTO INTEGRATIONS ( ID, NAME) VALUES (4, 'Indeed');
 
 INSERT INTO EMPLOYEES(EMAIL, PASSWORD, GPN, NOME, SALARIO_BASE_FY_ATUAL, EMPLOYEE_STATUS, PAIS, GENDER, LOCATION_CITY, SERVICE_LINE, SUB_SL, RANK_ATUAL, EXP_LEV_ATUAL, JOB_TITLE, HIRING_DATE, PROPORCIONAL_HIRING_DATE, UTILIZAÇAO, PROMOÇAO, LEAD_ATUAL, RANK_FUTURO, EXP_LEVEL_FUTURO, ACTUAL, SMUS_ID, JOBS_ID, LEVEL)
-        VALUES("BR110101010@ey.com.br", "$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742", "BR110101010", "Eric Messina", "5000", "Active",    
+        VALUES("flavia.souza@ey.com", "$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742", "BR110101010", "Flávia Hara", "5000", "Active",    
                "Brasil", "M", "São Paulo", "Advisory", "PI", "44-Staff/Assistant", 1,
                "Analista Senior", "2018-07-01 00:00:00", "1.0", "0.7495361566543579", "Progression", "nan",
                "44-Staff/Assistant", 1, 0.13123, 6, 1, 1);

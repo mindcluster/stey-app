@@ -17,8 +17,8 @@ class OverviewService {
 
         const overview: IOverviewResponse = {
             employees: employees.length,
-            entry: employees.filter(employee => employee.entry_date !== null).length,
-            exit: employees.filter(employee => employee.exit_date !== null).length,
+            entry: employees.filter(employee => (employee.entry_date !== null && employee.entry_date.getMonth() == new Date().getMonth())).length,
+            exit: employees.filter(employee => (employee.exit_date !== null && employee.exit_date.getMonth() == new Date().getMonth())).length,
             promotion: employees.filter(employee => employee.last_promotion_date !== null).length / employees.length * 100,
             turnover: employees.filter(employee => employee.exit_date !== null).length / employees.length * 100
         }
