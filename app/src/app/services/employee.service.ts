@@ -2,9 +2,11 @@ import { getConnection, Repository } from "typeorm";
 import Employee from "../entities/employee.entity";
 import { ISalary } from "../shared/interfaces/action.interface";
 import { IEmployeeResponse } from "../shared/interfaces/employee.interface";
-import smuService from "./smu.service";
+import axios from "axios";
 
 const connection = getConnection()
+
+const URL_RECOMMENDATION = process.env.URL_RECOMMENDATION
 
 class EmployeeService {
 
@@ -20,8 +22,6 @@ class EmployeeService {
 
         return employeesResponse
     }
-
-
 
     async getById(id: number) {
         this.repository = connection.getRepository(Employee)
@@ -88,7 +88,13 @@ class EmployeeService {
     }
 
     async getPromotionScore(employeeId: number) {
-        return 99; // TODO: implementar
+        try {
+            const result = await axios.get(URL_RECOMMENDATION + employeeId)
+            return result.data['data']['status']
+        } catch (error) {
+            console.log(error)
+            return ""
+        }
     }
 
     async getRoleSatisfaction(id: number) {

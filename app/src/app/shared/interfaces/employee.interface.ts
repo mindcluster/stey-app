@@ -14,7 +14,7 @@ export interface IEmployeeResponse {
     rank?: string;
     salary?: number;
     dependents?: number;
-    promotion_score?: number;
+    promotion_score?: string;
     last_promotion?: Date;
     last_vacation?: Date;
     company_time?: Date;
