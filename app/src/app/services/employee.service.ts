@@ -4,6 +4,7 @@ import { ISalary } from "../shared/interfaces/action.interface";
 import { IEmployeeResponse } from "../shared/interfaces/employee.interface";
 import axios from "axios";
 import NodeCache from "node-cache";
+import xlsx from "xlsx";
 
 const connection = getConnection()
 
@@ -74,7 +75,7 @@ class EmployeeService {
             smu: employee.smus.smu_name,
             rank: employee.rank_atual,
             current: employee.salario_base_fy_atual, // TODO: Implement current salary
-            market: await this.getMarketData(),// TODO: Implement Market method from Glassdoor
+            market: await this.getMarketData(employee.rank_atual,employee.location_city),// TODO: Implement Market method from Glassdoor
             budget_smu: employee.smus.budget
         }
     }
@@ -109,8 +110,21 @@ class EmployeeService {
         return 42; // TODO: implementar
     }
 
-    async getMarketData() {
-        return 1400;
+    async getMarketData(rank:String, city:String) {
+        var workbook = xlsx.readFile('../../infrastructure/data/salarios.xlsx');
+        var sheet_name_list = workbook.SheetNames;
+        var xlData = xlsx.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+
+        const emp = xlData.filter(x=> x.UF===city)
+        const emp2 = emp[0]
+
+        for(var i in emp2){
+            if (i === rank){
+                var average_salary = emp2[i]
+
+            }
+        }
+        return average_salary
     }
 
     async buildEmployeeResponse(employees: Employee[]): Promise<IEmployeeResponse[]> {
