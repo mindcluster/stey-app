@@ -253,6 +253,43 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "PUT Employees Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Roxanna Wan\",\r\n    \"email\": \"BR377885127@ey.com.br\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_base}}/employee/2",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"employee",
+								"2"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -366,12 +403,95 @@
 							}
 						},
 						"url": {
-							"raw": "{{url_base}}/overview",
+							"raw": "{{url_base}}/overview/turnover",
 							"host": [
 								"{{url_base}}"
 							],
 							"path": [
-								"overview"
+								"overview",
+								"turnover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Overview Use Employee By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@ey.com.br\",\r\n    \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_base}}/overview/use-employee/1334",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"overview",
+								"use-employee",
+								"1334"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Overview Future Experience",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@ey.com.br\",\r\n    \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_base}}/overview/future-level-experience/1334",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"overview",
+								"future-level-experience",
+								"1334"
 							]
 						}
 					},

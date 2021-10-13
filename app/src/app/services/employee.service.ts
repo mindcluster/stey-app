@@ -98,7 +98,7 @@ class EmployeeService {
 
             const result = await axios.get(URL_RECOMMENDATION + employeeId)
             this.myCache.set(employeeId, result.data['data']['status'], 10000000)
-            
+
             return result.data['data']['status']
         } catch (error) {
             return "-"
@@ -141,6 +141,15 @@ class EmployeeService {
             });
         }
         return employeesResponse
+    }
+
+    async update(id, employee) {
+        this.repository = connection.getRepository(Employee)
+
+        const employeeUpdated = await this.repository.save({ ...employee, id })
+
+        delete employeeUpdated.password
+        return { employee: employeeUpdated }
     }
 
 }

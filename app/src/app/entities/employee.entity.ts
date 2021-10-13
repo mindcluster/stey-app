@@ -107,6 +107,8 @@ export default class Employee {
     @BeforeInsert()
     @BeforeUpdate()
     hashPassword() {
-        this.password = bcryptjs.hashSync(this.password ? this.password : '', 8);
+        if (this.password) {
+            this.password = bcryptjs.hashSync(this.password ? this.password : '', 8);
+        }
     }
 }

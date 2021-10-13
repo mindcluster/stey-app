@@ -69,6 +69,20 @@ class EmployeeController {
         }
     }
 
+    async update(request: Request, response: Response) {
+        let id = parseInt(request.params.id)
+        let employee = request.body
+
+        try {
+            const data = await employeeService.update(id, employee)
+            return response.status(200).json({ 'message': 'employee updated', 'data': data })
+        } catch (error) {
+            return response.status(500).json({
+                message: error.message
+            })
+        }
+    }
+
 }
 
 export default new EmployeeController()
