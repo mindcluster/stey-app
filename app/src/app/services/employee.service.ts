@@ -3,6 +3,7 @@ import Employee from "../entities/employee.entity";
 import { ISalary } from "../shared/interfaces/action.interface";
 import { IEmployeeResponse } from "../shared/interfaces/employee.interface";
 import axios from "axios";
+import NodeCache from "node-cache";
 
 const connection = getConnection()
 
@@ -11,6 +12,7 @@ const URL_RECOMMENDATION = process.env.URL_RECOMMENDATION
 class EmployeeService {
 
     repository: Repository<Employee>
+    myCache = new NodeCache();
 
     async getAll() {
 
@@ -89,11 +91,17 @@ class EmployeeService {
 
     async getPromotionScore(employeeId: number) {
         try {
+            const promotionScoreCached = await this.myCache.get(employeeId)
+            if (promotionScoreCached) {
+                return promotionScoreCached
+            }
+
             const result = await axios.get(URL_RECOMMENDATION + employeeId)
+            this.myCache.set(employeeId, result.data['data']['status'], 10000000)
+            
             return result.data['data']['status']
         } catch (error) {
-            console.log(error)
-            return ""
+            return "-"
         }
     }
 
