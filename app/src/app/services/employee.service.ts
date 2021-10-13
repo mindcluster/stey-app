@@ -122,6 +122,7 @@ class EmployeeService {
                 name: employee.nome,
                 job_role: employee.job_title,
                 email: employee.email,
+                image: employee.image,
                 gpn: employee.gpn,
                 country: employee.pais,
                 smu: employee.smus.smu_name,

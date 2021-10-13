@@ -22,6 +22,9 @@ export default class Employee {
     nome: string;
 
     @Column()
+    image: string;
+
+    @Column()
     salario_base_fy_atual: number;
 
     @Column()

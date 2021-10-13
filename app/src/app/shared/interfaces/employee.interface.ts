@@ -6,6 +6,7 @@ export interface IEmployeeResponse {
     name?: string;
     job_role?: string;
     email?: string;
+    image?: string;
     // Dados da tabela
     gpn?: string;
     country?: string;
