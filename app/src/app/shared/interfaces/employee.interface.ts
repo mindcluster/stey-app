@@ -5,6 +5,7 @@ export interface IEmployeeResponse {
     id?: number;
     name?: string;
     job_role?: string;
+    future_job_role?: string;
     email?: string;
     image?: string;
     // Dados da tabela

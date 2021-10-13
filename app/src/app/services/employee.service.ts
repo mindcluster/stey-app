@@ -121,6 +121,7 @@ class EmployeeService {
                 id: employee.id,
                 name: employee.nome,
                 job_role: employee.job_title,
+                future_job_role: this.getFutureJobTitle(employee.job_title),
                 email: employee.email,
                 image: employee.image,
                 gpn: employee.gpn,
@@ -141,6 +142,20 @@ class EmployeeService {
             });
         }
         return employeesResponse
+    }
+
+    getFutureJobTitle(job_title: string) {
+        const future_job_titles = {
+            'Analista Junior': 'Analista Pleno',
+            'Analista Pleno': 'Analista Senior',
+            'Analista Senior': 'Especialista',
+            'Especialista': 'Gerente',
+            'Gerente': 'Gerente Senior',
+            'Gerente Senior': 'Diretor',
+            'Diretor': '-'
+        }
+
+        return future_job_titles[job_title] ?? '-'
     }
 
     async update(id, employee) {
@@ -167,6 +182,19 @@ class EmployeeService {
             console.log(error)
             return []
         }
+    }
+
+    async promote(employeeId) {
+        this.repository = connection.getRepository(Employee)
+
+        const employee: Employee = await this.repository.findOne(employeeId)
+        employee.exp_lev_atual = employee.exp_lev_atual + 1
+        employee.last_promotion_date = new Date()
+        employee.job_title = this.getFutureJobTitle(employee.job_title)
+
+        const employeeUpdated = await this.repository.save(employee)
+
+        return employeeUpdated
     }
 }
 

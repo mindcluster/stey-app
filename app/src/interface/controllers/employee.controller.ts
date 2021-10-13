@@ -94,6 +94,19 @@ class EmployeeController {
         }
     }
 
+    async promote(request: Request, response: Response) {
+        let id = request.params.id
+
+        try {
+            const data = await employeeService.promote(id)
+            return response.status(200).json({ 'message': 'employee promoted', 'data': data })
+        } catch (error) {
+            return response.status(500).json({
+                message: error.message
+            })
+        }
+    }
+
 }
 
 export default new EmployeeController()
