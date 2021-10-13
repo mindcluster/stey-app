@@ -330,6 +330,35 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GET Employees Promote",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/employee/2/promote",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"employee",
+								"2",
+								"promote"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
