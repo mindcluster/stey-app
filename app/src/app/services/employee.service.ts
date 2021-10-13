@@ -152,6 +152,22 @@ class EmployeeService {
         return { employee: employeeUpdated }
     }
 
+    async getRecommendations() {
+        try {
+            const recommendations = await this.myCache.get('recommendations')
+            if (recommendations) {
+                return recommendations
+            }
+
+            const result = await axios.get(URL_RECOMMENDATION)
+            this.myCache.set('recommendations', result.data, 10000000)
+
+            return result.data['data']
+        } catch (error) {
+            console.log(error)
+            return []
+        }
+    }
 }
 
 export default new EmployeeService()

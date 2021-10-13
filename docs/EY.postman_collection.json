@@ -290,6 +290,46 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GET Employees Recommendations",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@ey.com.br\",\r\n    \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_base}}/employee/recommendations",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"employee",
+								"recommendations"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

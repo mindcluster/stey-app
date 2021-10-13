@@ -83,6 +83,17 @@ class EmployeeController {
         }
     }
 
+    async getRecommendations(_: Request, response: Response) {
+        try {
+            const data = await employeeService.getRecommendations()
+            return response.status(200).json({ 'message': 'employee recommendations', data })
+        } catch (error) {
+            return response.status(500).json({
+                message: error.message
+            })
+        }
+    }
+
 }
 
 export default new EmployeeController()
