@@ -3,6 +3,7 @@ import mysql.connector
 import names
 import datetime
 import random
+import requests
 
 
 def get_employees_from_excel():
@@ -50,21 +51,22 @@ def insert_employees(mydb, df_cleaned):
         SMU_NAME = row['SMU Name']
         SMUS_ID = get_smu(mydb, SMU_NAME)
         JOBS_ID = get_jobs(mydb, JOB_TITLE)
+        IMAGE = get_image_profile()
 
         ENTRY_DATE = f"'{get_random_date()}'"
         EXIT_DATE = get_random_date()
         EXIT_DATE = f"'{EXIT_DATE}'" if datetime.date(
             2021, 1, 1) <= EXIT_DATE else "NULL"
 
-        sql = f'''INSERT INTO EMPLOYEES(EMAIL, PASSWORD, GPN, NOME, SALARIO_BASE_FY_ATUAL, EMPLOYEE_STATUS, PAIS, GENDER, LOCATION_CITY, SERVICE_LINE, SUB_SL, RANK_ATUAL, EXP_LEV_ATUAL, JOB_TITLE, HIRING_DATE, PROPORCIONAL_HIRING_DATE, LAST_PROMOTION_DATE, UTILIZAÇAO, PROMOÇAO, LEAD_ATUAL, RANK_FUTURO, EXP_LEVEL_FUTURO, ACTUAL, SMUS_ID, JOBS_ID, LEVEL, ENTRY_DATE, EXIT_DATE)
+        sql = f'''INSERT INTO EMPLOYEES(EMAIL, PASSWORD, GPN, NOME, SALARIO_BASE_FY_ATUAL, EMPLOYEE_STATUS, PAIS, GENDER, LOCATION_CITY, SERVICE_LINE, SUB_SL, RANK_ATUAL, EXP_LEV_ATUAL, JOB_TITLE, HIRING_DATE, PROPORCIONAL_HIRING_DATE, LAST_PROMOTION_DATE, UTILIZAÇAO, PROMOÇAO, LEAD_ATUAL, RANK_FUTURO, EXP_LEVEL_FUTURO, ACTUAL, SMUS_ID, JOBS_ID, LEVEL, ENTRY_DATE, EXIT_DATE, IMAGE)
         VALUES("{EMAIL}", "{PASSWORD}", "{GPN}", "{NOME}", "{SALARIO_BASE_FY_ATUAL}", "{EMPLOYEE_STATUS}",
                "{PAIS}", "{GENDER}", "{LOCATION_CITY}", "{SERVICE_LINE}", "{SUB_SL}", "{RANK_ATUAL}", {EXP_LEV_ATUAL},
                "{JOB_TITLE}", "{HIRING_DATE}", "{PROPORCIONAL_HIRING_DATE}", {LAST_PROMOTION_DATE}, "{UTILIZAÇAO}", "{PROMOÇAO}", "{LEAD_ATUAL}", 
-               "{RANK_FUTURO}", {EXP_LEVEL_FUTURO}, {ACTUAL}, {SMUS_ID}, {JOBS_ID}, {LEVEL}, {ENTRY_DATE}, {EXIT_DATE});'''
+               "{RANK_FUTURO}", {EXP_LEVEL_FUTURO}, {ACTUAL}, {SMUS_ID}, {JOBS_ID}, {LEVEL}, {ENTRY_DATE}, {EXIT_DATE}, "{IMAGE}");'''
+        print(sql)
         mycursor.execute(sql)
         number_inserted += 1
-
-    mydb.commit()
+        mydb.commit()
 
     print(number_inserted, "record inserted.")
     mycursor.close()
@@ -97,13 +99,12 @@ def get_jobs(mydb, job_name):
 def insert_certificates(mydb):
     mycursor = mydb.cursor()
 
-    for i in range(1, 100):
+    for i in range(1, 150):
         sql = f'''INSERT INTO CERTIFICATES(NAME, DATE, EMPLOYEES_ID)
         VALUES("Certificado {random.randint(1, 1000)}", '{get_random_date()}', {random.randint(1, 100)});'''
-        
-        mycursor.execute(sql)
 
-    mydb.commit()
+        mycursor.execute(sql)
+        mydb.commit()
     mycursor.close()
 
 
@@ -118,10 +119,15 @@ def get_random_date():
     return random_date
 
 
+def get_image_profile():
+    return requests.get('https://randomuser.me/api/').json()['results'][0]['picture']['large']
+
+
 def main():
     try:
         mydb = mysql.connector.connect(
             host="localhost",
+            port=3306,
             user="user_stey",
             password="123456",
             database="stey_db"
