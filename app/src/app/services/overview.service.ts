@@ -159,7 +159,9 @@ class OverviewService {
             useData.push(items[key]);
         }
 
-        useEmployee.data = useData;
+        const shortedByKey = useData.sort((a, b) => (a.key > b.key) ? 1 : -1);
+
+        useEmployee.data = shortedByKey;
         return useEmployee;
     }
 
@@ -194,6 +196,8 @@ class OverviewService {
             futureExpLevel.data.push(items[key]);
         }
 
+        futureExpLevel.data = futureExpLevel.data.sort((a, b) => (a.key > b.key) ? 1 : -1);
+        
         return futureExpLevel;
     }
 
