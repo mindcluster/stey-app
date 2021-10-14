@@ -6,6 +6,9 @@ import axios from "axios";
 import NodeCache from "node-cache";
 import xlsx from "xlsx";
 import path from "path";
+import Budget from "../entities/budget.entity";
+import budgetService from "./budget.service";
+import smuService from "./smu.service";
 
 const connection = getConnection()
 
@@ -81,13 +84,23 @@ class EmployeeService {
         }
     }
 
-    async increaseSalary(employeeId, salary) {
+    async increaseSalary(employeeId, salary: number) {
         this.repository = connection.getRepository(Employee)
 
-        const employee: Employee = await this.repository.findOne(employeeId)
-        employee.salario_base_fy_atual = salary
+
+        const employee: Employee = await this.repository.findOne({ id: employeeId }, { relations: ["smus"] })
+        employee.smus.budget -= salary
+        if (employee.smus.budget <= 0) {
+            throw new Error("Not enough budget")
+        }
+        employee.salario_base_fy_atual = parseInt(`${employee.salario_base_fy_atual}`) + salary
+
         const employeeUpdated = await this.repository.save(employee)
 
+        await smuService.update(employee.smus.id, employee.smus)
+        await budgetService.decreaseBugdet(salary)
+
+        delete employeeUpdated.password
         return employeeUpdated
     }
 

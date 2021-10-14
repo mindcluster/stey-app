@@ -47,8 +47,18 @@ class BudgetService {
         if (updateResult.affected === 0) {
             throw new Error('Budget not updated')
         }
-        
+
         return budgetToUpdate
+    }
+
+    async decreaseBugdet(salary) {
+        try {
+            const budget = await this.getCurrentBudget()
+            budget.used += salary
+            await this.update(budget.id, budget)
+        } catch (error) {
+            console.error(error)
+        }
     }
 
 }

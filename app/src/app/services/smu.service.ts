@@ -12,6 +12,10 @@ class SmuService {
         return await this.repository.findOne({ id })
     }
 
+    async update(id: number, smu: Smu) {
+        this.repository = connection.getRepository(Smu)
+        return await this.repository.update(id, smu)
+    }
 }
 
 export default new SmuService()

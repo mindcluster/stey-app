@@ -48,7 +48,7 @@ class EmployeeController {
 
         try {
             const data = await employeeService.increaseSalary(id, salary)
-            return response.status(200).json({ 'message': 'employee salary', 'data': data })
+            return response.status(200).json({ 'message': 'employee salary increased', 'data': data })
         } catch (error) {
             return response.status(500).json({
                 message: error.message
