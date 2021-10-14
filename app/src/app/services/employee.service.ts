@@ -121,7 +121,7 @@ class EmployeeService {
     }
 
     async getRoleSatisfaction(id: number) {
-        return 42; // TODO: implementar, vira do formulário
+        return id < 30 ? 70 + id : 90; // TODO: implementar, vira do formulário
     }
 
     async getMarketData(rank: String, city: String) {
