@@ -111,7 +111,7 @@ class EmployeeService {
     }
 
     async getMarketData(rank: String, city: String) {
-        var workbook = xlsx.readFile('../../infrastructure/data/salarios.xlsx');
+        var workbook = xlsx.readFile('app/src/infrastructure/data/salarios.xlsx');
         var sheet_name_list = workbook.SheetNames;
         var xlData = xlsx.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
 
