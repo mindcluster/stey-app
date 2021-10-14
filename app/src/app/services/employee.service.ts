@@ -112,7 +112,7 @@ class EmployeeService {
     }
 
     async getMarketData(rank: String, city: String) {
-        var workbook = xlsx.readFile(path.resolve(__dirname, __dirname.includes('dist') ? '../../../../files/salarios.xlsx' : '../../../app/files/salarios.xlsx'));
+        var workbook = xlsx.readFile(path.resolve(__dirname, __dirname.includes('dist') ? '../../../../app/files/salarios.xlsx' : '../../../files/salarios.xlsx'));
         var sheet_name_list = workbook.SheetNames;
         var xlData = xlsx.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
 
