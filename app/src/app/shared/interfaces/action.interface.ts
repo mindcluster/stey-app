@@ -4,6 +4,6 @@ export interface ISalary {
     smu: string;
     rank: string;
     current: number;
-    market: number;
+    market: string;
     budget_smu: number;
 }

@@ -137,7 +137,7 @@ class EmployeeService {
                 var average_salary = emp2[i]
             }
         }
-        return average_salary
+        return `${average_salary}`
     }
 
     async buildEmployeeResponse(employees: Employee[]): Promise<IEmployeeResponse[]> {
@@ -197,18 +197,28 @@ class EmployeeService {
     async getRecommendations() {
         try {
             const recommendations = await this.myCache.get('recommendations')
-            if (recommendations) {
+
+            if (recommendations !== undefined && recommendations !== null && recommendations !== {}) {
                 return recommendations
             }
 
             const result = await axios.get(URL_RECOMMENDATION)
-            this.myCache.set('recommendations', result.data, 10000000)
 
-            return result.data['data']
+            const recommended = this.getProgressionAndPromotion(result.data['data'])
+
+            this.myCache.set('recommendations', recommended, 10000000)
+            return recommended
         } catch (error) {
             console.log(error)
             return []
         }
+    }
+
+    getProgressionAndPromotion(recommendations) {
+        const progression = recommendations.filter(x => x.status === 'Progression')
+        const promotion = recommendations.filter(x => x.status === 'Promotion')
+
+        return [...promotion.slice(0, 7), ...progression.slice(0, 5)]
     }
 
     async promote(employeeId) {
