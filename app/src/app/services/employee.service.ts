@@ -75,7 +75,7 @@ class EmployeeService {
             smu: employee.smus.smu_name,
             rank: employee.rank_atual,
             current: employee.salario_base_fy_atual, // TODO: Implement current salary
-            market: await this.getMarketData(employee.rank_atual,employee.location_city),// TODO: Implement Market method from Glassdoor
+            market: await this.getMarketData(employee.rank_atual, employee.location_city),// TODO: Implement Market method from Glassdoor
             budget_smu: employee.smus.budget
         }
     }
@@ -107,21 +107,20 @@ class EmployeeService {
     }
 
     async getRoleSatisfaction(id: number) {
-        return 42; // TODO: implementar
+        return 42; // TODO: implementar, vira do formulário
     }
 
-    async getMarketData(rank:String, city:String) {
+    async getMarketData(rank: String, city: String) {
         var workbook = xlsx.readFile('../../infrastructure/data/salarios.xlsx');
         var sheet_name_list = workbook.SheetNames;
         var xlData = xlsx.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
 
-        const emp = xlData.filter(x=> x.UF===city)
-        const emp2 = emp[0]
+        const emp = xlData.filter(x => x['UF'] === city)
+        const emp2: any = emp[0]
 
-        for(var i in emp2){
-            if (i === rank){
+        for (var i in emp2) {
+            if (i === rank) {
                 var average_salary = emp2[i]
-
             }
         }
         return average_salary
