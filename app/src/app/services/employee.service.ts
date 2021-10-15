@@ -227,6 +227,7 @@ class EmployeeService {
         const employee: Employee = await this.repository.findOne(employeeId)
         employee.exp_lev_atual = employee.exp_lev_atual + 1
         employee.last_promotion_date = new Date()
+        employee.salario_base_fy_atual = parseInt(`${employee.salario_base_fy_atual}`) * 1.3
         employee.job_title = this.getFutureJobTitle(employee.job_title)
 
         const employeeUpdated = await this.repository.save(employee)
