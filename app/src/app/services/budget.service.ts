@@ -54,7 +54,7 @@ class BudgetService {
     async decreaseBugdet(salary) {
         try {
             const budget = await this.getCurrentBudget()
-            budget.used += salary
+            budget.used = parseInt(`${budget.used}`) + salary
             await this.update(budget.id, budget)
         } catch (error) {
             console.error(error)
