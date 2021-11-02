@@ -9,6 +9,8 @@ Aplicativo de auxilio aos recursos humanos da empresa EY
 - Docker
 - MySQL
 
+<img alt="Arquitetura da aplicação" src="./docs/EY_Diagram.drawio.png"/>
+
 ## Get Started
 
 Para rodar o projeto basta rodar estes comandos:
